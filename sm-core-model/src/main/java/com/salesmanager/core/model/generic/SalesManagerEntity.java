@@ -8,7 +8,7 @@ import org.hibernate.Hibernate;
 
 
 /**
- * <p>Entité racine pour la persistence des objets via JPA.</p>
+ * <p>通过JPA实现对象持久性的根实体</p>
  *
  * @param <E> type de l'entité
  */

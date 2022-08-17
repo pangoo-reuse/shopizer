@@ -137,7 +137,7 @@ public class ContentApi {
 	 * @return
 	 */
 	@GetMapping(value = "/content/pages/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(httpMethod = "GET", value = "Get page content by code for a given MerchantStore", notes = "", produces = "application/json", response = ReadableContentPage.class)
+	@ApiOperation(httpMethod = "GET", value = "通过代码(code)获取给定MerchantStore的页面内容", notes = "", produces = "application/json", response = ReadableContentPage.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
 			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
 	public ReadableContentPage page(@PathVariable("code") String code, @ApiIgnore MerchantStore merchantStore,
