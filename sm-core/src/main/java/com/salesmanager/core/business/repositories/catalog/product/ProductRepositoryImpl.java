@@ -567,13 +567,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 	}
 
 	/**
-	 * This query is used for filtering products based on criterias
-	 * Main query for getting product list based on input criteria
-	 * ze method
+	 * 此查询用于基于标准过滤产品
+	 * *根据输入条件获取产品列表的主要查询
+	 * *方法
 	 *
 	 * @param store
-	 * @param first
-	 * @param max
+	 * @param language
+	 * @param criteria
 	 * @return
 	 */
 	@Override

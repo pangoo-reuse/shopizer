@@ -96,7 +96,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     	}
  
     	
-    	if(requestUrl.contains("/api/v1/private") || requestUrl.contains("/api/v2/private")) {
+    	if(requestUrl.contains("/api/v1/private") || requestUrl.contains("/api/v2/private")||requestUrl.contains("/api/v3/private")) {
     		
     		//setHeader(request,response);  
     		

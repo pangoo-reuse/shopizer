@@ -33,7 +33,7 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
     }
 
     @Valid
-    @OneToMany(mappedBy = "promotionBanner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany( mappedBy = "banner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<BannerDescription> descriptions = new HashSet<BannerDescription>();
 
     /**
@@ -56,8 +56,8 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
     /**
      * 创建时间*
      */
+    @Column(name = "DATE_CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_CREATED")
     private Date createdAt;
 
 

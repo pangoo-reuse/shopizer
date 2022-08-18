@@ -79,7 +79,7 @@ public interface UserFacade {
   boolean authorizeStore(MerchantStore store, String path);
   
   /**
-   * Determines if a user is in a specific group
+   * 确定用户是否属于特定组
    * @param userName
    * @param groupNames
    */

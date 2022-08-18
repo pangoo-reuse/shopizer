@@ -43,26 +43,26 @@ public class FlashSale extends SalesManagerEntity<Integer, FlashSale> implements
     private List<String> productIdList;
 
     @Valid
-    @OneToMany(mappedBy = "promotionFlashSale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flashSale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<FlashSaleDescription> descriptions = new HashSet<FlashSaleDescription>();
 
     /**
      * 创建时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_CREATED")
+    @Column(name = "DATE_CREATED_AT")
     private Date createdAt;
     /**
      * 活动开始时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_START")
+    @Column(name = "DATE_START_AT",nullable = false)
     private Date startAt;
     /**
      * 活动结束时间
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_END")
+    @Column(name = "DATE_END_AT",nullable = false)
     private Date endAt;
 
     @Override

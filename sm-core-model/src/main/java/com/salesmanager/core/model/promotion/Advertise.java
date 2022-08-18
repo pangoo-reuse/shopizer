@@ -18,13 +18,10 @@ import java.util.Set;
 @Entity
 @EntityListeners(value = AuditListener.class)
 @Table(name = "ADVERTISE")
-public class Advertise extends SalesManagerEntity<Integer, Advertise> implements Auditable {
+public class Advertise extends SalesManagerEntity<Integer, Advertise> {
 
 
     private static final long serialVersionUID = 1L;
-
-    @Embedded
-    private AuditSection auditSection = new AuditSection();
     @Id
     @Column(name = "ADVERTISE_ID", unique = true, nullable = false)
     @TableGenerator(name = "TABLE_GEN", table = "SM_SEQUENCER", pkColumnName = "SEQ_NAME", valueColumnName = "SEQ_COUNT", pkColumnValue = "GROUP_SEQ_NEXT_VAL")
@@ -48,7 +45,7 @@ public class Advertise extends SalesManagerEntity<Integer, Advertise> implements
     private Integer sortOrder = 0;
 
     @Column(name = "AVAILABLE")
-    private boolean available = true;
+    private boolean available = false;
     /**
      * Product to category
      */
@@ -72,30 +69,20 @@ public class Advertise extends SalesManagerEntity<Integer, Advertise> implements
      * 创建时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_CREATED")
+    @Column(name = "DATE_CREATED_AT")
     private Date createdAt;
     /**
      * 活动开始时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_START")
+    @Column(name = "DATE_START_AT",nullable = false)
     private Date startAt;
     /**
      * 活动结束时间
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_END")
+    @Column(name = "DATE_END_AT")
     private Date endAt;
-
-    @Override
-    public AuditSection getAuditSection() {
-        return auditSection;
-    }
-
-    @Override
-    public void setAuditSection(AuditSection audit) {
-        this.auditSection = audit;
-    }
 
     @Override
     public Integer getId() {

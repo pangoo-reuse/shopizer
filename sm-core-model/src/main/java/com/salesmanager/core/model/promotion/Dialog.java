@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 /**
  * 一个弹窗广告，包含一个 Banner
  */
@@ -41,14 +42,14 @@ public class Dialog extends SalesManagerEntity<Integer, Dialog> implements Audit
      * 唯一编码*
      */
     @NotEmpty
-    @Column(name="CODE", length=100, nullable=false)
+    @Column(name = "CODE", length = 100, nullable = false)
     private String code;
 
     @Column(name = "SORT_ORDER")
     private Integer sortOrder = 0;
 
     @Column(name = "AVAILABLE")
-    private boolean available = true;
+    private boolean available = false;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "BANNER_ID")
@@ -58,19 +59,19 @@ public class Dialog extends SalesManagerEntity<Integer, Dialog> implements Audit
      * 创建时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_CREATED")
+    @Column(name = "DATE_CREATED_AT")
     private Date createdAt;
     /**
      * 活动开始时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_START")
+    @Column(name = "DATE_START_AT", nullable = false)
     private Date startAt;
     /**
      * 活动结束时间
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_END")
+    @Column(name = "DATE_END_AT", nullable = false)
     private Date endAt;
 
     @Override
