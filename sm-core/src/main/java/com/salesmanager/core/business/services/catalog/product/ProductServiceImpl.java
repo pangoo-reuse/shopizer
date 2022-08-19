@@ -129,6 +129,11 @@ public class ProductServiceImpl extends SalesManagerEntityServiceImpl<Long, Prod
 	}
 
 	@Override
+	public boolean existsProductsById(Long productId)  {
+		return productRepository.existsById(productId);
+	}
+
+	@Override
 	public Product getProductWithOnlyMerchantStoreById(Long productId) {
 		return productRepository.getProductWithOnlyMerchantStoreById(productId);
 	}

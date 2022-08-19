@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import com.salesmanager.core.business.services.system.task.TimerTaskMethod;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
@@ -52,13 +52,13 @@ public class ModuleConfigurationServiceImpl extends SalesManagerEntityServiceImp
 		this.moduleConfigurationRepository = moduleConfigurationRepository;
 	}
 
-	@Override
+	@TimerTaskMethod
 	public IntegrationModule getByCode(String moduleCode) {
 		return moduleConfigurationRepository.findByCode(moduleCode);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
+	@TimerTaskMethod
 	public List<IntegrationModule> getIntegrationModules(String module) {
 
 		List<IntegrationModule> modules = null;
@@ -162,7 +162,7 @@ public class ModuleConfigurationServiceImpl extends SalesManagerEntityServiceImp
 	}
 
 
-	@Override
+	@TimerTaskMethod
 	public void createOrUpdateModule(String json) throws ServiceException {
 
 		ObjectMapper mapper = new ObjectMapper();

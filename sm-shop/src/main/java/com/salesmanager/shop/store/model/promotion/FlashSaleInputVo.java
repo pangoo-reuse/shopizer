@@ -5,33 +5,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class AdvertiseVo {
-    private String code;
-
-    private Integer sortOrder;
+public class FlashSaleInputVo {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date startAt;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date endAt;
 
-    public AdvertiseVo() {
+    public FlashSaleInputVo() {
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(Integer sortOrder) {
-        this.sortOrder = sortOrder;
-    }
 
     public Date getStartAt() {
         return startAt;

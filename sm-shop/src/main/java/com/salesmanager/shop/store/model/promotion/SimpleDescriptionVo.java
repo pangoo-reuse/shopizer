@@ -2,13 +2,13 @@ package com.salesmanager.shop.store.model.promotion;
 
 
 
-public class BannerDescriptionVo {
+public class SimpleDescriptionVo {
     private String title, shortDesc, languageCode;
 
-    public BannerDescriptionVo() {
+    public SimpleDescriptionVo() {
     }
 
-    public BannerDescriptionVo(String title, String shortDesc, String languageCode) {
+    public SimpleDescriptionVo(String title, String shortDesc, String languageCode) {
         this.title = title;
         this.shortDesc = shortDesc;
         this.languageCode = languageCode;

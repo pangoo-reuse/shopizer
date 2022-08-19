@@ -1,40 +1,51 @@
 package com.salesmanager.shop.store.model.promotion;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
 
-public class BannerDescriptionVo {
-    private String title, shortDesc, languageCode;
+import java.util.Date;
 
-    public BannerDescriptionVo() {
+public class AdvertiseVo {
+    private String code;
+
+    private Integer sortOrder;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private Date startAt;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private Date endAt;
+
+    public AdvertiseVo() {
     }
 
-    public BannerDescriptionVo(String title, String shortDesc, String languageCode) {
-        this.title = title;
-        this.shortDesc = shortDesc;
-        this.languageCode = languageCode;
+    public String getCode() {
+        return code;
     }
 
-    public String getTitle() {
-        return title;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public Integer getSortOrder() {
+        return sortOrder;
     }
 
-    public String getShortDesc() {
-        return shortDesc;
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
+    public Date getStartAt() {
+        return startAt;
     }
 
-    public String getLanguageCode() {
-        return languageCode;
+    public void setStartAt(Date startAt) {
+        this.startAt = startAt;
     }
 
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
+    public Date getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(Date endAt) {
+        this.endAt = endAt;
     }
 }

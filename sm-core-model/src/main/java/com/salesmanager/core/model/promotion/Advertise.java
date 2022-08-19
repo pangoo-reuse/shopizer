@@ -38,7 +38,7 @@ public class Advertise extends SalesManagerEntity<Integer, Advertise> {
      * 唯一编码*
      */
     @NotEmpty
-    @Column(name="CODE", length=100, nullable=false)
+    @Column(name="CODE", length=100, nullable=false,unique = true)
     private String code;
 
     @Column(name = "SORT_ORDER")

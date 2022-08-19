@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TimerTaskRepository extends JpaRepository<SystemTimerTask, Integer> {
+public interface SystemTimerTaskRepository extends JpaRepository<SystemTimerTask, Integer> {
     List<SystemTimerTask> findAllByAvailableIsTrue();
 }

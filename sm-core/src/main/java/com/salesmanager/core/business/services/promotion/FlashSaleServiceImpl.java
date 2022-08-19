@@ -1,10 +1,13 @@
 package com.salesmanager.core.business.services.promotion;
 
 import com.salesmanager.core.business.exception.ServiceException;
-import com.salesmanager.core.business.repositories.promotion.AdvertiseRepository;
-import com.salesmanager.core.business.repositories.promotion.BannerRepository;
-import com.salesmanager.core.model.promotion.Advertise;
-import com.salesmanager.core.model.promotion.Banner;
+import com.salesmanager.core.business.repositories.promotion.FlashSaleRepository;
+import com.salesmanager.core.business.services.catalog.product.ProductService;
+import com.salesmanager.core.business.services.system.task.impl.TaskProductProcessor;
+import com.salesmanager.core.model.catalog.product.Product;
+import com.salesmanager.core.model.promotion.falshSale.FlashSale;
+import com.salesmanager.core.model.promotion.falshSale.FlashSaleDescription;
+import com.salesmanager.core.model.promotion.falshSale.FlashSaleProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,79 +16,94 @@ import javax.inject.Inject;
 import java.util.Date;
 import java.util.List;
 
-@Service("advertiseServiceV3")
-public class AdvertiseServiceImpl implements AdvertiseService {
+@Service("flashSaleServiceV3")
+public class FlashSaleServiceImpl implements FlashSaleService {
+
+
+    private FlashSaleRepository flashSaleRepository;
 
     @Autowired
-    private BannerRepository bannerRepository;
-
-    private AdvertiseRepository advertiseRepository;
+    private ProductService productService;
+    @Autowired
+    private TaskProductProcessor taskProductProcessor;
 
     @Inject
-    public AdvertiseServiceImpl(AdvertiseRepository advertiseRepository) {
-        this.advertiseRepository = advertiseRepository;
+    public FlashSaleServiceImpl(FlashSaleRepository flashSaleRepository) {
+        this.flashSaleRepository = flashSaleRepository;
     }
 
     @Override
-    public Integer definition(String code, Integer sortOrder, Date startAt, Date endAt) throws Exception {
-        if (advertiseRepository.existsByCode(code)) {
-            throw new ServiceException("advertise exists");
-        }
+    public Integer definition(Long ownerId, Date startAt, Date endAt) throws Exception {
 
-        Advertise advertise = new Advertise();
+        FlashSale flashSale = new FlashSale();
 
 
-        advertise.setEndAt(endAt);
-        advertise.setStartAt(startAt);
-        advertise.setCode(code);
-        advertise.setSortOrder(sortOrder);
-        advertise.setCreatedAt(new Date());
+        flashSale.setEndAt(endAt);
+        flashSale.setStartAt(startAt);
+        flashSale.setCreatedAt(new Date());
+        flashSale.setOwnerId(ownerId);
 
-        advertise = advertiseRepository.saveAndFlush(advertise);
-        return advertise.getId();
+        flashSale = flashSaleRepository.saveAndFlush(flashSale);
+        return flashSale.getId();
     }
 
     @Transactional
     @Override
-    public void combine(Integer advertiseId, List<Integer> bannerIds) throws Exception {
-        if (!advertiseRepository.existsById(advertiseId)) {
-            throw new ServiceException("Advertise not exists");
+    public void combine(Integer flashSaleId, List<FlashSaleDescription> flashSaleDescriptions) throws Exception {
+        //Integer flashSaleId, List<FlashSaleDescription> flashSaleDescriptions
+        boolean exists = flashSaleRepository.existsById(flashSaleId);
+        if (!exists) {
+            throw new ServiceException("闪购活动不存在");
         }
-        if (bannerIds == null) {
-            throw new ServiceException("请配置banner");
+        if (flashSaleDescriptions == null) {
+            throw new ServiceException("请插入banner的描述");
         }
-        List<Banner> banners = bannerRepository.findAllInIds(bannerIds);
 
-        Advertise advertise = advertiseRepository.findOne(advertiseId);
-        //将desc 跟当前banner关联起来
-        advertise.getBanners().addAll(banners);
+        FlashSale flashSale = flashSaleRepository.findFlashSaleById(flashSaleId);
+        for (FlashSaleDescription description : flashSaleDescriptions) {
+            //将desc 跟当前banner关联起来
+            description.setFlashSale(flashSale);
+            flashSale.getDescriptions().add(description);
+        }
+        flashSaleRepository.save(flashSale);
+    }
 
-        advertiseRepository.save(advertise);
+    @Transactional
+    @Override
+    public void combineProducts(Integer flashSaleId, List<FlashSaleProduct> products) throws Exception {
+        boolean exists = flashSaleRepository.existsById(flashSaleId);
+        if (!exists) {
+            throw new ServiceException("闪购活动不存在");
+        }
+        FlashSale flashSale = flashSaleRepository.findFlashSaleById(flashSaleId);
+        products.forEach(
+                flashSaleProduct -> {
+                    boolean existsP = productService.existsProductsById(flashSaleProduct.getProductId());
+                    if (existsP){
+                        flashSaleProduct.setFlashSale(flashSale);
+                    }
+                }
+
+        );
+        flashSaleRepository.save(flashSale);
+        //TODO 创建定时任务去开启闪购？
+        taskProductProcessor.saveTaskFlashTask(products,flashSale.getStartAt().getTime(),flashSale.getEndAt().getTime());
     }
 
     @Transactional
     @Override
     public void delete(Integer advertiseId) {
-        advertiseRepository.deleteById(advertiseId);
+        flashSaleRepository.deleteById(advertiseId);
     }
 
     @Override
-    public List<Advertise> advertises() {
-        return advertiseRepository.findAll();
+    public List<FlashSale> flashSales() {
+        return flashSaleRepository.findAll();
     }
 
-    @Override
-    public List<Advertise> findFullAdvertises() {
-        return advertiseRepository.findFullList();
-    }
 
     @Override
-    public Advertise advertise(Integer id) {
-        return advertiseRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public Advertise advertiseByCode(String code) {
-        return advertiseRepository.findOneFullByCode(code);
+    public FlashSale flashSales(Integer id) {
+        return flashSaleRepository.findById(id).orElse(null);
     }
 }

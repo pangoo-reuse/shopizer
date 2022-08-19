@@ -2,6 +2,7 @@ package com.salesmanager.core.business.services.system;
 
 import javax.inject.Inject;
 
+import com.salesmanager.core.business.services.system.task.TimerTaskMethod;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
 	@Inject
 	private HtmlEmailSender sender;
 	
-	@Override
+	@TimerTaskMethod
 	public void sendHtmlEmail(MerchantStore store, Email email) throws ServiceException, Exception {
 
 		EmailConfig emailConfig = getEmailConfiguration(store);
@@ -31,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
 		sender.send(email);
 	}
 
-	@Override
+	@TimerTaskMethod
 	public EmailConfig getEmailConfiguration(MerchantStore store) throws ServiceException {
 		
 		MerchantConfiguration configuration = merchantConfigurationService.getMerchantConfiguration(Constants.EMAIL_CONFIG, store);
@@ -50,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
 	}
 	
 	
-	@Override
+	@TimerTaskMethod
 	public void saveEmailConfiguration(EmailConfig emailConfig, MerchantStore store) throws ServiceException {
 		MerchantConfiguration configuration = merchantConfigurationService.getMerchantConfiguration(Constants.EMAIL_CONFIG, store);
 		if(configuration==null) {

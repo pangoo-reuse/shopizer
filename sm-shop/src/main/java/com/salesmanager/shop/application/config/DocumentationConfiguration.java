@@ -65,6 +65,7 @@ public class DocumentationConfiguration {
 
 		return new Docket(DocumentationType.SWAGGER_2)
 				.host(HOST)
+				.apiInfo(apiInfo())
 				.select()
 				.apis(requestHandlers()).build()
 				.securitySchemes(Collections.singletonList(new ApiKey("JWT", AUTHORIZATION, HEADER.name())))
@@ -89,7 +90,8 @@ public class DocumentationConfiguration {
 		   Set<Predicate<RequestHandler>> matchers = new HashSet<Predicate<RequestHandler>>();
 		   matchers.add(RequestHandlerSelectors.basePackage("com.salesmanager.shop.store.api.v1"));
 		   matchers.add(RequestHandlerSelectors.basePackage("com.salesmanager.shop.store.api.v2"));
-		   
+		   matchers.add(RequestHandlerSelectors.basePackage("com.salesmanager.shop.store.api.v3"));
+
 		   return Predicates.or(matchers);
 
 	}

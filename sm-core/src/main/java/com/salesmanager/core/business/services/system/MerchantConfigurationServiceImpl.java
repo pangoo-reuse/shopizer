@@ -2,6 +2,8 @@ package com.salesmanager.core.business.services.system;
 
 import java.util.List;
 import javax.inject.Inject;
+
+import com.salesmanager.core.business.services.system.task.TimerTaskMethod;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salesmanager.core.business.exception.ServiceException;
@@ -27,22 +29,22 @@ public class MerchantConfigurationServiceImpl extends
 	}
 	
 
-	@Override
+	@TimerTaskMethod
 	public MerchantConfiguration getMerchantConfiguration(String key, MerchantStore store) throws ServiceException {
 		return merchantConfigurationRepository.findByMerchantStoreAndKey(store.getId(), key);
 	}
 	
-	@Override
+	@TimerTaskMethod
 	public List<MerchantConfiguration> listByStore(MerchantStore store) throws ServiceException {
 		return merchantConfigurationRepository.findByMerchantStore(store.getId());
 	}
 	
-	@Override
+	@TimerTaskMethod
 	public List<MerchantConfiguration> listByType(MerchantConfigurationType type, MerchantStore store) throws ServiceException {
 		return merchantConfigurationRepository.findByMerchantStoreAndType(store.getId(), type);
 	}
 	
-	@Override
+	@TimerTaskMethod
 	public void saveOrUpdate(MerchantConfiguration entity) throws ServiceException {
 		
 
@@ -56,7 +58,7 @@ public class MerchantConfigurationServiceImpl extends
 	}
 	
 	
-	@Override
+	@TimerTaskMethod
 	public void delete(MerchantConfiguration merchantConfiguration) throws ServiceException {
 		MerchantConfiguration config = merchantConfigurationRepository.getOne(merchantConfiguration.getId());
 		if(config!=null) {
@@ -64,7 +66,7 @@ public class MerchantConfigurationServiceImpl extends
 		}
 	}
 	
-	@Override
+	@TimerTaskMethod
 	public MerchantConfig getMerchantConfig(MerchantStore store) throws ServiceException {
 
 		MerchantConfiguration configuration = merchantConfigurationRepository.findByMerchantStoreAndKey(store.getId(), MerchantConfigurationType.CONFIG.name());
@@ -84,7 +86,7 @@ public class MerchantConfigurationServiceImpl extends
 		
 	}
 	
-	@Override
+	@TimerTaskMethod
 	public void saveMerchantConfig(MerchantConfig config, MerchantStore store) throws ServiceException {
 		
 		MerchantConfiguration configuration = merchantConfigurationRepository.findByMerchantStoreAndKey(store.getId(), MerchantConfigurationType.CONFIG.name());

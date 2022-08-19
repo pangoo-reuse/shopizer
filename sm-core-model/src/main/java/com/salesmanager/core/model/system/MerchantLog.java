@@ -62,6 +62,10 @@ public class MerchantLog extends SalesManagerEntity<Long, MerchantLog> implement
 		this.log = log;
 	}
 
+	public MerchantLog() {
+
+	}
+
 
 	public Long getId() {
 		return id;

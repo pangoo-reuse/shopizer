@@ -2,24 +2,22 @@ package com.salesmanager.core.business.services.promotion;
 
 import com.salesmanager.core.model.promotion.Banner;
 import com.salesmanager.core.model.promotion.BannerDescription;
-import com.salesmanager.core.model.promotion.Dialog;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Date;
+import java.util.List;
 
 public interface BannerService {
 
-    void definition(Long creatorId,String viewerUrl, String targetUri, Date createdAt);
+    Integer definition(Long creatorId, String viewUrl, String targetUri);
 
     /**
      * * 必须关联 BannerDescription 更新才能生效
-     * @param banner
      */
-    void updateCombineBannerDescription(Banner banner);
+    void combine(Integer bannerId, List<BannerDescription> bannerDescriptions) throws Exception;
 
-    void update(Integer dialogId, BannerDescription bannerDescription);
+    void delete(Integer bannerId);
 
-    void delete(Integer dialogId);
+
+    List<Banner> banners();
+
+    Banner banner(Integer id) throws Exception;
 }

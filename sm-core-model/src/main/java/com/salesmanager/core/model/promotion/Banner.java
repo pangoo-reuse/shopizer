@@ -1,8 +1,5 @@
 package com.salesmanager.core.model.promotion;
 
-import com.salesmanager.core.model.common.audit.AuditListener;
-import com.salesmanager.core.model.common.audit.AuditSection;
-import com.salesmanager.core.model.common.audit.Auditable;
 import com.salesmanager.core.model.generic.SalesManagerEntity;
 
 import javax.persistence.*;
@@ -12,15 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@EntityListeners(value = AuditListener.class)
 @Table(name = "BANNER")
-public class Banner extends SalesManagerEntity<Integer, Banner> implements Auditable {
+public class Banner extends SalesManagerEntity<Integer, Banner> {
 
 
     private static final long serialVersionUID = 1L;
-
-    @Embedded
-    private AuditSection auditSection = new AuditSection();
     @Id
     @Column(name = "BANNER_ID", unique = true, nullable = false)
     @TableGenerator(name = "TABLE_GEN", table = "SM_SEQUENCER", pkColumnName = "SEQ_NAME", valueColumnName = "SEQ_COUNT", pkColumnValue = "GROUP_SEQ_NEXT_VAL")
@@ -39,13 +32,13 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
     /**
      * 创建者ID
      */
-    @Column(name = "CREATOR_ID")
-    private Long creatorId;
+    @Column(name = "OWNER_ID")
+    private Long ownerId;
     /**
      * 可以是图片也可以是视频地址
      */
-    @Column(name = "VIEWER_URL")
-    private String viewerUrl;
+    @Column(name = "VIEW_URL")
+    private String viewUrl;
 
     /**
      * 可以指向一个网页，也可以指向html,也可以指向 product(productId)
@@ -62,16 +55,6 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
 
 
     @Override
-    public AuditSection getAuditSection() {
-        return auditSection;
-    }
-
-    @Override
-    public void setAuditSection(AuditSection audit) {
-        this.auditSection = audit;
-    }
-
-    @Override
     public Integer getId() {
         return id;
     }
@@ -81,20 +64,20 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
         this.id = id;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getViewerUrl() {
-        return viewerUrl;
+    public String getViewUrl() {
+        return viewUrl;
     }
 
-    public void setViewerUrl(String viewerUrl) {
-        this.viewerUrl = viewerUrl;
+    public void setViewUrl(String viewUrl) {
+        this.viewUrl = viewUrl;
     }
 
     public String getTargetUri() {
@@ -105,14 +88,6 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
         this.targetUri = targetUri;
     }
 
-    public BannerDescription getDescription() {
-        if (descriptions != null && descriptions.size() > 0) {
-            return descriptions.iterator().next();
-        }
-
-        return null;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -120,8 +95,6 @@ public class Banner extends SalesManagerEntity<Integer, Banner> implements Audit
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-
 
     public Set<BannerDescription> getDescriptions() {
         return descriptions;

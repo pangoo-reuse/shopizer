@@ -120,14 +120,6 @@ public class Promo extends SalesManagerEntity<Integer, Promo> {
 
 
 
-    public PromoDescription getDescription() {
-        if (descriptions != null && descriptions.size() > 0) {
-            return descriptions.iterator().next();
-        }
-
-        return null;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }

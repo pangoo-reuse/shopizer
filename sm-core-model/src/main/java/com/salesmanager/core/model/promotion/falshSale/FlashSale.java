@@ -1,9 +1,11 @@
 package com.salesmanager.core.model.promotion.falshSale;
 
+import com.salesmanager.core.model.catalog.product.Product;
 import com.salesmanager.core.model.common.audit.AuditListener;
 import com.salesmanager.core.model.common.audit.AuditSection;
 import com.salesmanager.core.model.common.audit.Auditable;
 import com.salesmanager.core.model.generic.SalesManagerEntity;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -29,18 +31,18 @@ public class FlashSale extends SalesManagerEntity<Integer, FlashSale> implements
     public FlashSale() {
 
     }
+
     /**
      * 创建者ID
      */
     @Column(name = "CREATOR_ID")
-    private Long creatorId;
+    private Long ownerId;
+
     /**
-     * 指向多个商品
+     * Product to flashSale
      */
-    @ElementCollection // 1
-    @CollectionTable(name = "FLASH_SALE_PIDS", joinColumns = @JoinColumn(name = "FLASH_SALE_ID")) // 2
-    @Column(name = "PIDS",nullable = false)
-    private List<String> productIdList;
+    @OneToMany(mappedBy = "flashSale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<FlashSaleProduct> flashSaleProducts = new HashSet<FlashSaleProduct>();
 
     @Valid
     @OneToMany(mappedBy = "flashSale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -56,13 +58,13 @@ public class FlashSale extends SalesManagerEntity<Integer, FlashSale> implements
      * 活动开始时间*
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_START_AT",nullable = false)
+    @Column(name = "DATE_START_AT", nullable = false)
     private Date startAt;
     /**
      * 活动结束时间
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "DATE_END_AT",nullable = false)
+    @Column(name = "DATE_END_AT", nullable = false)
     private Date endAt;
 
     @Override
@@ -85,28 +87,20 @@ public class FlashSale extends SalesManagerEntity<Integer, FlashSale> implements
         this.id = id;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public List<String> getProductIdList() {
-        return productIdList;
+    public Set<FlashSaleProduct> getFlashSaleProducts() {
+        return flashSaleProducts;
     }
 
-    public void setProductIdList(List<String> productIdList) {
-        this.productIdList = productIdList;
-    }
-
-    public FlashSaleDescription getDescription() {
-        if (descriptions != null && descriptions.size() > 0) {
-            return descriptions.iterator().next();
-        }
-
-        return null;
+    public void setFlashSaleProducts(Set<FlashSaleProduct> flashSaleProducts) {
+        this.flashSaleProducts = flashSaleProducts;
     }
 
     public Date getCreatedAt() {

@@ -53,7 +53,7 @@ public class AdvertiseTest extends com.salesmanager.test.common.AbstractSalesMan
 
 
 
-        banner.setCreatorId(1L);
+        banner.setOwnerId(1L);
         banner.setTargetUri("schema://product?id=1" );
 //        banner.getDescriptions().add(bannerDescription);
         banner.setCreatedAt(new Date(new Date().toInstant().plusMillis(1000 * 60 * 60 ).getEpochSecond()));

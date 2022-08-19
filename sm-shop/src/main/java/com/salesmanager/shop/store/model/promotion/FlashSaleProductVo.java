@@ -1,51 +1,44 @@
 package com.salesmanager.shop.store.model.promotion;
 
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
-public class AdvertiseVo {
-    private String code;
+public class FlashSaleProductVo {
+    private Long productId;
 
-    private Integer sortOrder;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date startAt;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date endAt;
+    /**
+     * 折扣百分比
+     */
+    private Integer percent;
 
-    public AdvertiseVo() {
+    /**
+     * 1 为 直接优惠多少元，2 为百分比，
+     * 前台显示时候要根据这个字段判断是否计算后显示给用户*
+     */
+    private Integer saleType;
+
+
+    public Long getProductId() {
+        return productId;
     }
 
-    public String getCode() {
-        return code;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public Integer getPercent() {
+        return percent;
     }
 
-    public Integer getSortOrder() {
-        return sortOrder;
+    public void setPercent(Integer percent) {
+        this.percent = percent;
     }
 
-    public void setSortOrder(Integer sortOrder) {
-        this.sortOrder = sortOrder;
+    public Integer getSaleType() {
+        return saleType;
     }
 
-    public Date getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(Date startAt) {
-        this.startAt = startAt;
-    }
-
-    public Date getEndAt() {
-        return endAt;
-    }
-
-    public void setEndAt(Date endAt) {
-        this.endAt = endAt;
+    public void setSaleType(Integer saleType) {
+        this.saleType = saleType;
     }
 }
